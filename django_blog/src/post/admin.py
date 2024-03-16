@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Category,UserAccount
+from .models import Post, Category
 
 
 @admin.register(Post) 
@@ -17,10 +17,3 @@ class CategoryAdmin(admin.ModelAdmin):
         'updated_at',
     )
     
-@admin.register(UserAccount)  
-class UserAccountAdmin(admin.ModelAdmin):
-    list_display = ('id','created_at', 'updated_at','mobile_phone')
-    readonly_fields = (
-        'created_at',
-        'updated_at',
-    )

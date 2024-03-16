@@ -1,5 +1,7 @@
+import json
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.http import HttpResponse, HttpResponseNotFound, Http404,JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Post
 
@@ -20,10 +22,20 @@ def post_archive(request, year):
         raise Http404
     return HttpResponse(f'archive for: {year}')
 
+@csrf_exempt
 def get_post_handler(request):
-    if request.POST:
+    if request.method == 'POST':
         return HttpResponse('POST request')
-    return HttpResponse('GET request')
+    is_active = request.GET.get('is_active')
+    user = request.GET.get('user')
+    
+    posts = Post.objects.filter(is_actual=bool(is_active), user__username=user).values('title')
+
+    response = {
+        'posts': list(posts)
+    }   
+    
+    return JsonResponse(response) 
 
 
 
