@@ -1,0 +1,15 @@
+{% extends "_base.html" %}
+
+{% load static %}
+
+{% block content %}
+<h1>Posts:</h1>
+<ul>
+{% for post in posts %}
+    <li><a href="{{post.get_absolute_url}}">{{ post.title }}</a></li>
+{% empty %}  
+    <li>No posts yet</li>
+{% endfor %}
+</ul>
+<hr>
+{% endblock content%}

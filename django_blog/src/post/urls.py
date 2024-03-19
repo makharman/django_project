@@ -1,9 +1,12 @@
-from django.urls import path, re_path
+from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.posts),
-    path('<int:post_id>/', views.post_detail),
-    re_path(r'^archive/(?P<year>[0-9]{4})/$', views.post_archive),
-    path('get_post/', views.get_post_handler),
+    path('', views.PostList.as_view(), name='list_post'),
+    path('create/', views.CreatePostView.as_view(), name='create_post'),
+    path('<int:pk>/', views.PostDetail.as_view(), name='detail_post'),
+    path('about/', views.AboutView.as_view(), name='about_post'),
+    path('apiview/', views.PostApiView.as_view(), name='list_apiview'),
+    path('<int:pk>/delete/', views.PostDeleteAPIView.as_view(), name='delete_post')
+    
 ]

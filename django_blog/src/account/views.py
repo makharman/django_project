@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
 from .models import UserAccount
 from post.models import Post
 from .serializers import PostListSerializer
@@ -19,15 +20,8 @@ class AccountAPIView(APIView):
         return Response('test')
 
 
-class PostAPIView(APIView):
-    def get(self, request):
-        post_queryset = Post.objects.all()
-        serializer = PostListSerializer(post_queryset, many=True)
-        return Response(serializer.data)
 
-    def post(self, request):
-        print(request.data)
-        return Response('test')
+    
     
 
 class PostDeleteAPIView(APIView):

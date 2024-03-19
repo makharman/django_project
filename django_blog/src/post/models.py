@@ -6,13 +6,43 @@ from django.contrib.auth.models import User
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=128)
-    # photo = models.ImageField('post/imgs/', null=True)
-    created_at = models.DateTimeField(auto_now_add=True,null=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True)
-    is_actual = models.BooleanField(default=False)
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='posts')
-    categories = models.ManyToManyField(to='Category',related_name='posts')
+    status_choices = (
+        ('ACTIVE', 'Active'),
+        ('DRAFT', 'Draft'),
+    )
+    
+    title = models.CharField(verbose_name='Заголовок поста',max_length=255)
+    text = models.TextField(verbose_name='Текст поста',max_length=2048)
+    status = models.CharField(
+        verbose_name='Статус поста',
+        max_length=6, 
+        choices=status_choices, 
+        default='DRAFT'
+    )
+    
+    image = models.ImageField(
+        verbose_name='Изображение поста', 
+        upload_to='imgs/posts', 
+        null=True, 
+        blank=True
+    )
+    
+    created_at = models.DateTimeField(verbose_name='Дата создания',auto_now_add=True,null=True)
+    updated_at = models.DateTimeField(verbose_name='Дата обновления',auto_now=True, null=True)
+    is_active = models.BooleanField(default=False)
+    
+    user = models.ForeignKey(
+        verbose_name='Автор поста',
+        to=User, 
+        on_delete=models.CASCADE, 
+        related_name='posts'
+    )
+    
+    categories = models.ManyToManyField(
+        verbose_name='Категории',
+        to='Category',
+        related_name='posts'
+    )
     
     class Meta:
         ordering = ['-updated_at']
@@ -21,10 +51,15 @@ class Post(models.Model):
         return f'{self.id} - {self.title}'  
     
 class Category(models.Model):
-    title = models.CharField(max_length=128)
-    created_at = models.DateTimeField(auto_now_add=True,null=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True)
-    is_actual = models.BooleanField(default=False)  
+    title = models.CharField(
+        verbose_name='Название категории',
+        max_length=128,
+        unique=True,
+    )
+    
+    created_at = models.DateTimeField(verbose_name='Дата создания',auto_now_add=True,null=True)
+    updated_at = models.DateTimeField(verbose_name='Дата обновления',auto_now=True, null=True)
+    is_active = models.BooleanField(verbose_name='Статус категории',default=False)  
     
     
     class Meta:
