@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from .serializers import PostListModelSerializer,PostCreateModelSerializer,PostDetailSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView
 from django.contrib.auth.models import User
-
+from rest_framework.permissions import IsAuthenticated
 
 from post.models import Post
 
@@ -14,6 +14,7 @@ from post.models import Post
 class PostList(ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostListModelSerializer
+    permission_classes = [IsAuthenticated]
     
 
     
@@ -21,12 +22,14 @@ class PostList(ListCreateAPIView):
 class PostDetail(RetrieveUpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer  
+    permission_classes = [IsAuthenticated] 
     
     
     
 class PostDeleteAPIView(DestroyAPIView):
     queryset = Post.objects.all()
     serializer = PostDeleteModelSerializer
+    permission_classes = [IsAuthenticated] 
     
     
     
