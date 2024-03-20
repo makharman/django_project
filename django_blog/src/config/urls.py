@@ -10,7 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('post/', include('post.urls')),
     path('account/', include('account.urls')),
-    # path('api/v2'),
+    path('api/v1/', include('api.urls')),
 ]
 
 # handler404 = page_404

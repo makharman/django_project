@@ -16,6 +16,11 @@ class PostListModelSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('title', 'status')
         
+
+class PostDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('title','status')
         
         
 class PostCreateModelSerializer(serializers.ModelSerializer):
