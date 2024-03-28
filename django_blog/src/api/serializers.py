@@ -18,11 +18,9 @@ class PostCreateModelSerializer(serializers.ModelSerializer):
   
     class Meta:
         model = Post
-        fields = ('title','text', 'status','image', 'user')
+        fields = ('title','text', 'status','image', 'user', 'categories')
     
-    # def validate_title(self, title):
-    #     print(title)
-    #     return title
+
         
 class PostDeleteModelSerializer(serializers.ModelSerializer):
     
